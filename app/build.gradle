@@ -1,0 +1,86 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.jmcaldera.cattos"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    def libs = rootProject.ext
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.android.support:appcompat-v7:$libs.supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$libs.constraintVersion"
+    implementation "com.android.support:recyclerview-v7:$libs.supportLibraryVersion"
+
+    // Lifecycle
+    implementation "android.arch.lifecycle:extensions:$libs.lifecycleVersion"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$libs.coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$libs.coroutinesVersion"
+
+    implementation "com.squareup.retrofit2:retrofit:$libs.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$libs.retrofitVersion"
+    implementation "com.squareup.moshi:moshi:$libs.moshiVersion"
+    implementation 'com.android.support:support-v4:28.0.0-rc02'
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$libs.moshiVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$libs.okhttpVersion"
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    kapt 'com.github.bumptech.glide:compiler:4.8.0'
+
+    implementation "com.google.dagger:dagger:$libs.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$libs.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$libs.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$libs.daggerVersion"
+
+    // Leaks
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$libs.leakCanaryVersion"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$libs.leakCanaryVersion"
+    // Optional, if you use support library fragments:
+    debugImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$libs.leakCanaryVersion"
+
+
+    testImplementation "junit:junit:$libs.junitVersion"
+    testImplementation "org.mockito:mockito-core:$libs.mockitoVersion"
+    androidTestImplementation "com.android.support.test:runner:$libs.runnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
+}
+
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
