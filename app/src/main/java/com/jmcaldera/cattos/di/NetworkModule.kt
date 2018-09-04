@@ -14,6 +14,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit.SECONDS
 import javax.inject.Singleton
 
 @Module(includes = [ViewModelModule::class])
@@ -34,6 +35,9 @@ class NetworkModule {
   fun provideOkClient(@ApiKey apiKey: String, cache: Cache): OkHttpClient =
     OkHttpClient.Builder()
         .cache(cache)
+        .connectTimeout(30, SECONDS)
+        .readTimeout(30, SECONDS)
+        .writeTimeout(30, SECONDS)
         .addInterceptor(CattoApiInterceptor(apiKey))
         .addInterceptor(HttpLoggingInterceptor().apply {
           level = HttpLoggingInterceptor.Level.BODY

@@ -74,6 +74,10 @@ dependencies {
 
     testImplementation "junit:junit:$libs.junitVersion"
     testImplementation "org.mockito:mockito-core:$libs.mockitoVersion"
+    testImplementation "org.mockito:mockito-inline:$libs.mockitoVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "android.arch.core:core-testing:$libs.lifecycleVersion"
+
     androidTestImplementation "com.android.support.test:runner:$libs.runnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
 }
