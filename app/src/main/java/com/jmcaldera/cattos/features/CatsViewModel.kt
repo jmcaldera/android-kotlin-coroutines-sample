@@ -3,11 +3,15 @@ package com.jmcaldera.cattos.features
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.jmcaldera.cattos.domain.Cat
+import com.jmcaldera.cattos.domain.model.Cat
 import com.jmcaldera.cattos.domain.CattoRepository
 import com.jmcaldera.cattos.domain.Dispatchers
 import com.jmcaldera.cattos.domain.exception.Failure
+import com.jmcaldera.cattos.domain.exception.NetworkError
+import com.jmcaldera.cattos.domain.exception.ResponseUnsuccessful
+import com.jmcaldera.cattos.domain.exception.ServerError
 import com.jmcaldera.cattos.domain.functional.fold
+import com.jmcaldera.cattos.domain.model.LoadingState
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
@@ -23,17 +27,23 @@ class CatsViewModel
 
   private val _cats: MutableLiveData<List<Cat>> = MutableLiveData()
 
+
   val cats: MediatorLiveData<List<Cat>> = MediatorLiveData()
 
-  val error: MutableLiveData<Boolean> = MutableLiveData()
+  val loadingState: MutableLiveData<LoadingState<List<Cat>>> = MutableLiveData()
+
+  val loadMoreState : MutableLiveData<LoadMoreState> = MutableLiveData()
 
   init {
     cats.addSource(_cats) { newCats -> cats.value = newCats }
+    loadMoreState.value = LoadMoreState(false, null)
   }
 
   fun getCats() {
+
+    loadingState.value = LoadingState.loading(null)
     launch(appDispatchers.network, parent = rootJob) {
-      val result = cattoRepository.getCatImages()
+      val result = cattoRepository.getCats()
 
       println(result)
 
@@ -44,11 +54,43 @@ class CatsViewModel
     }
   }
 
+  fun loadNextPage() {
+    loadMoreState.value = LoadMoreState(true, null)
+    launch(appDispatchers.network, parent = rootJob) {
+      val result = cattoRepository.getCatsNextPage()
+
+      println(result)
+
+      withContext(appDispatchers.main) {
+        println("UI thread: ${Thread.currentThread().name}")
+        result.fold({ error -> handleErrorNextPage(error) }, { cats -> handleCattosNextPage(cats) })
+      }
+    }
+  }
+
   private fun handleError(failure: Failure) {
-    error.value = true
+    loadingState.value = LoadingState.error(when(failure) {
+      is NetworkError -> "Network Error"
+      is ResponseUnsuccessful -> failure.error ?: "Unsuccessful Response"
+      is ServerError -> failure.t.message ?: "Server Error"
+    }, null)
+  }
+
+  private fun handleErrorNextPage(failure: Failure) {
+    loadMoreState.value = LoadMoreState(false, when(failure) {
+      is NetworkError -> "Network Error"
+      is ResponseUnsuccessful -> failure.error ?: "Unsuccessful Response"
+      is ServerError -> failure.t.message
+    })
   }
 
   private fun handleCattos(cats: List<Cat>) {
+    loadingState.value = LoadingState.success(cats)
+    this._cats.value = cats
+  }
+
+  private fun handleCattosNextPage(cats: List<Cat>) {
+    loadMoreState.value = LoadMoreState(false, null)
     this._cats.value = cats
   }
 
@@ -65,6 +107,19 @@ class CatsViewModel
   override fun onCleared() {
     super.onCleared()
     stopCoroutines()
+  }
+
+  class LoadMoreState(val isRunning: Boolean, val errorMessage: String?) {
+    private var handledError = false
+
+    val errorMessageIfNotHandled: String?
+      get() {
+        if (handledError) {
+          return null
+        }
+        handledError = true
+        return errorMessage
+      }
   }
 
 }

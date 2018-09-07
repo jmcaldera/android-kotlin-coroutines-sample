@@ -25,9 +25,9 @@ class CatsViewModelTest : ArchComponentTest() {
 
   @Test
   fun testGetCats() = runBlocking<Unit> {
-    given(cattoRepository.getCatImages()).thenReturn(right(emptyList()))
+    given(cattoRepository.getCats()).thenReturn(right(emptyList()))
     viewModel.getCats()
-    verify(cattoRepository, times(1)).getCatImages()
+    verify(cattoRepository, times(1)).getCats()
   }
 
 }

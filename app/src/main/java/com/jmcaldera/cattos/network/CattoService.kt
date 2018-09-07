@@ -11,7 +11,11 @@ class CattoService
 
   private val cattoApi by lazy { retrofit.create(CattoApi::class.java) }
 
-  override fun getCatImages(limit: Int): Call<List<CatResponse>> {
-    return cattoApi.getCatImages(10)
+  override fun getCatImages(): Call<List<CatResponse>> {
+    return cattoApi.getCatImages()
+  }
+
+  override fun getCatImages(page: Int): Call<List<CatResponse>> {
+    return cattoApi.getCatImages(page)
   }
 }

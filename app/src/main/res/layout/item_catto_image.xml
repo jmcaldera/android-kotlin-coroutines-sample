@@ -7,7 +7,7 @@
   <data>
     <variable
         name="cat"
-        type="com.jmcaldera.cattos.domain.Cat" />
+        type="com.jmcaldera.cattos.domain.model.Cat" />
   </data>
 
   <android.support.constraint.ConstraintLayout
@@ -16,8 +16,8 @@
 
     <ImageView
         android:id="@+id/cattoImage"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
         android:contentDescription="Image"
         android:scaleType="center"
         app:imageUrl="@{cat.url}"

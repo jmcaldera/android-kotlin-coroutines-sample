@@ -1,4 +1,4 @@
-package com.jmcaldera.cattos.domain
+package com.jmcaldera.cattos.domain.model
 
 data class Cat(
   val id: String,

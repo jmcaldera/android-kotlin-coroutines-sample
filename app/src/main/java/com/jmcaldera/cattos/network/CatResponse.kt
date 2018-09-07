@@ -1,6 +1,6 @@
 package com.jmcaldera.cattos.network
 
-import com.jmcaldera.cattos.domain.Cat
+import com.jmcaldera.cattos.domain.model.Cat
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
