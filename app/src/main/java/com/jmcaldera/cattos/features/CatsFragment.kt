@@ -82,7 +82,9 @@ class CatsFragment : Fragment() {
         val totalItemCount = layoutManager.itemCount
         val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
 
-        if (threshold + lastVisibleItem > totalItemCount && !isLoading) {
+        if (threshold + lastVisibleItem > totalItemCount
+            && !isLoading
+            && dy > 0 /* scroll down */) {
           catsViewModel.loadNextPage()
         }
       }
