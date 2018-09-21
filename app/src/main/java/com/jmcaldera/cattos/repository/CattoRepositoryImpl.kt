@@ -2,7 +2,7 @@ package com.jmcaldera.cattos.repository
 
 import com.jmcaldera.cattos.domain.model.Cat
 import com.jmcaldera.cattos.domain.CattoRepository
-import com.jmcaldera.cattos.domain.Dispatchers
+import com.jmcaldera.cattos.domain.CommonDispatchers
 import com.jmcaldera.cattos.domain.exception.Failure
 import com.jmcaldera.cattos.domain.exception.NetworkError
 import com.jmcaldera.cattos.domain.functional.Either
@@ -25,7 +25,7 @@ import javax.inject.Singleton
 @Singleton
 class CattoRepositoryImpl
 @Inject constructor(
-  private val appDispatchers: Dispatchers,
+  private val appDispatchers: CommonDispatchers,
   private val networkHandler: NetworkHandler,
   private val cattoService: CattoService
 ) : CattoRepository {
@@ -46,7 +46,7 @@ class CattoRepositoryImpl
 
   override suspend fun getCats(): Either<Failure, List<Cat>> {
 
-    // Do something in diskIO thread before executing network request
+    // Do something in diskIO thread before executing background request
     withContext(appDispatchers.diskIO) {
       val result = 2 * 2 + 5
       println("Result: $result, Calculated in thread: ${Thread.currentThread().name}")

@@ -3,7 +3,7 @@ package com.jmcaldera.cattos.di
 import android.content.Context
 import com.jmcaldera.cattos.CattoApplication
 import com.jmcaldera.cattos.domain.AppDispatchers
-import com.jmcaldera.cattos.domain.Dispatchers
+import com.jmcaldera.cattos.domain.CommonDispatchers
 import dagger.Binds
 import dagger.Module
 
@@ -14,5 +14,5 @@ abstract class ApplicationModule {
   abstract fun bindContext(app: CattoApplication): Context
 
   @Binds
-  abstract fun bindDispatchers(dispatchers: AppDispatchers): Dispatchers
+  abstract fun bindDispatchers(dispatchers: AppDispatchers): CommonDispatchers
 }

@@ -5,25 +5,30 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.jmcaldera.cattos.domain.model.Cat
 import com.jmcaldera.cattos.domain.CattoRepository
-import com.jmcaldera.cattos.domain.Dispatchers
+import com.jmcaldera.cattos.domain.CommonDispatchers
 import com.jmcaldera.cattos.domain.exception.Failure
 import com.jmcaldera.cattos.domain.exception.NetworkError
 import com.jmcaldera.cattos.domain.exception.ResponseUnsuccessful
 import com.jmcaldera.cattos.domain.exception.ServerError
 import com.jmcaldera.cattos.domain.functional.fold
 import com.jmcaldera.cattos.domain.model.LoadingState
+import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
 import javax.inject.Inject
+import kotlin.coroutines.experimental.CoroutineContext
 
 class CatsViewModel
 @Inject constructor(
-  private val appDispatchers: Dispatchers,
+  private val appDispatchers: CommonDispatchers,
   private val cattoRepository: CattoRepository
-) : ViewModel() {
+) : ViewModel(), CoroutineScope {
 
-  private val rootJob = Job()
+  override val coroutineContext: CoroutineContext
+    get() = appDispatchers.background + rootJob
+
+  private var rootJob: Job = Job()
 
   private val _cats: MutableLiveData<List<Cat>> = MutableLiveData()
 
@@ -42,7 +47,7 @@ class CatsViewModel
   fun getCats() {
 
     loadingState.value = LoadingState.loading(null)
-    launch(appDispatchers.network, parent = rootJob) {
+    launch {
       val result = cattoRepository.getCats()
 
       println(result)
@@ -56,7 +61,7 @@ class CatsViewModel
 
   fun loadNextPage() {
     loadMoreState.value = LoadMoreState(true, null)
-    launch(appDispatchers.network, parent = rootJob) {
+    launch {
       val result = cattoRepository.getCatsNextPage()
 
       println(result)
