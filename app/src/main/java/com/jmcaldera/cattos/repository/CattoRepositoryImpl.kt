@@ -50,7 +50,6 @@ class CattoRepositoryImpl
     // Just to show that we can switch context inside a suspending function
     withContext(appDispatchers.diskIO) {
       val result = 2 * 2 + 5
-      delay(2000)
       println("DiskIO Result: $result, Calculated in thread: ${Thread.currentThread().name}")
     }
     println("Retrofit thread: ${Thread.currentThread().name}")
