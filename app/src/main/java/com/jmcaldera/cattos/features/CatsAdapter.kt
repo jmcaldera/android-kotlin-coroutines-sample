@@ -19,7 +19,6 @@ class CatsAdapter
 ) {
 
   internal var clickListener: (Cat) -> Unit = {}
-  private var currentList: MutableList<Cat> = mutableListOf()
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val binding = createBinding(parent)
@@ -37,16 +36,6 @@ class CatsAdapter
         parent,
         false
     )
-  }
-
-  /**
-   * Appends new list to current list and submits it to parent method to perform diff calculations
-   */
-  override fun submitList(list: List<Cat>?) {
-    list?.let {
-      currentList.addAll(list)
-    }
-    super.submitList(currentList)
   }
 
   class ViewHolder(val binding: ItemCattoImageBinding) : RecyclerView.ViewHolder(binding.root) {

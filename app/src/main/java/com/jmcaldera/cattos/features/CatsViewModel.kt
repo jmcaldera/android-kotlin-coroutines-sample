@@ -26,18 +26,17 @@ class CatsViewModel
 ) : ViewModel(), CoroutineScope {
 
   override val coroutineContext: CoroutineContext
-    get() = appDispatchers.background + rootJob
+    get() = appDispatchers.background + rootJob // Combine to cancel from rootJob reference
 
   private var rootJob: Job = Job()
 
   private val _cats: MutableLiveData<List<Cat>> = MutableLiveData()
 
-
   val cats: MediatorLiveData<List<Cat>> = MediatorLiveData()
 
   val loadingState: MutableLiveData<LoadingState<List<Cat>>> = MutableLiveData()
 
-  val loadMoreState : MutableLiveData<LoadMoreState> = MutableLiveData()
+  val loadMoreState: MutableLiveData<LoadMoreState> = MutableLiveData()
 
   init {
     cats.addSource(_cats) { newCats -> cats.value = newCats }
@@ -54,7 +53,10 @@ class CatsViewModel
 
       withContext(appDispatchers.main) {
         println("UI thread: ${Thread.currentThread().name}")
-        result.fold({ error -> handleError(error) }, { cats -> handleCattos(cats) })
+        result.fold(
+            { error -> handleError(error) },
+            { cats -> handleCattos(cats) }
+        )
       }
     }
   }
@@ -68,25 +70,32 @@ class CatsViewModel
 
       withContext(appDispatchers.main) {
         println("UI thread: ${Thread.currentThread().name}")
-        result.fold({ error -> handleErrorNextPage(error) }, { cats -> handleCattosNextPage(cats) })
+        result.fold(
+            { error -> handleErrorNextPage(error) },
+            { cats -> handleCattosNextPage(cats) }
+        )
       }
     }
   }
 
   private fun handleError(failure: Failure) {
-    loadingState.value = LoadingState.error(when(failure) {
-      is NetworkError -> "Network Error"
-      is ResponseUnsuccessful -> failure.error ?: "Unsuccessful Response"
-      is ServerError -> failure.t.message ?: "Server Error"
-    }, null)
+    loadingState.value = LoadingState.error(
+        when (failure) {
+          is NetworkError -> "Network Error"
+          is ResponseUnsuccessful -> failure.error ?: "Unsuccessful Response"
+          is ServerError -> failure.t.message ?: "Server Error"
+        }, null
+    )
   }
 
   private fun handleErrorNextPage(failure: Failure) {
-    loadMoreState.value = LoadMoreState(false, when(failure) {
+    loadMoreState.value = LoadMoreState(
+        false, when (failure) {
       is NetworkError -> "Network Error"
       is ResponseUnsuccessful -> failure.error ?: "Unsuccessful Response"
       is ServerError -> failure.t.message
-    })
+    }
+    )
   }
 
   private fun handleCattos(cats: List<Cat>) {
@@ -96,7 +105,9 @@ class CatsViewModel
 
   private fun handleCattosNextPage(cats: List<Cat>) {
     loadMoreState.value = LoadMoreState(false, null)
-    this._cats.value = cats
+    val previousList = _cats.value as MutableList?
+    previousList?.addAll(cats)
+    this._cats.value = previousList
   }
 
   fun stopCoroutines() {
@@ -114,7 +125,10 @@ class CatsViewModel
     stopCoroutines()
   }
 
-  class LoadMoreState(val isRunning: Boolean, val errorMessage: String?) {
+  class LoadMoreState(
+    val isRunning: Boolean,
+    val errorMessage: String?
+  ) {
     private var handledError = false
 
     val errorMessageIfNotHandled: String?

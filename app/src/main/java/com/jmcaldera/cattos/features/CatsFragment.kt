@@ -69,7 +69,9 @@ class CatsFragment : Fragment() {
 
     setupObservers()
     initRecyclerView()
-    catsViewModel.getCats()
+    if (savedInstanceState == null) {
+      catsViewModel.getCats()
+    }
   }
 
   private fun initRecyclerView() {

@@ -47,14 +47,15 @@ class CattoRepositoryImpl
   override suspend fun getCats(): Either<Failure, List<Cat>> {
 
     // Do something in diskIO thread before executing background request
+    // Just to show that we can switch context inside a suspending function
     withContext(appDispatchers.diskIO) {
       val result = 2 * 2 + 5
-      println("Result: $result, Calculated in thread: ${Thread.currentThread().name}")
       delay(2000)
-      println("After delay: ${Thread.currentThread().name}")
+      println("DiskIO Result: $result, Calculated in thread: ${Thread.currentThread().name}")
     }
     println("Retrofit thread: ${Thread.currentThread().name}")
 
+    // This will run on the context that called this function
     return when (networkHandler.isConnected) {
       true -> performRequest(cattoService.getCatImages())
           .map { response -> response.toApiResponse() }

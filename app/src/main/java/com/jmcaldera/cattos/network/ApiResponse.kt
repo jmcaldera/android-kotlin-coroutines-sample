@@ -21,6 +21,9 @@ sealed class ApiResponse<T> {
       }
     }
 
+    /**
+     * Extract pagination headers
+     */
     private fun extractHeaders(headers: Headers?): Map<String, Int> {
       return headers?.let {
         mapOf(
