@@ -3,7 +3,6 @@ package com.jmcaldera.cattos.di
 import android.content.Context
 import com.jmcaldera.cattos.R
 import com.jmcaldera.cattos.di.qualifier.ApiKey
-import com.jmcaldera.cattos.di.viewmodel.ViewModelModule
 import com.jmcaldera.cattos.domain.CattoRepository
 import com.jmcaldera.cattos.network.CattoApiInterceptor
 import com.jmcaldera.cattos.repository.CattoRepositoryImpl
@@ -17,7 +16,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit.SECONDS
 import javax.inject.Singleton
 
-@Module(includes = [ViewModelModule::class])
+@Module()
 class NetworkModule {
 
   @Provides

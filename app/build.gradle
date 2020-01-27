@@ -14,7 +14,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -39,13 +39,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.android.support:appcompat-v7:$libs.supportLibraryVersion"
-    implementation "com.android.support.constraint:constraint-layout:$libs.constraintVersion"
-    implementation "com.android.support:recyclerview-v7:$libs.supportLibraryVersion"
-    implementation "com.android.support:design:$libs.supportLibraryVersion"
+    implementation "androidx.appcompat:appcompat:$libs.androidx_appcompat_version"
+    implementation "androidx.constraintlayout:constraintlayout:$libs.androidx_constraint_version"
+    implementation "androidx.recyclerview:recyclerview:$libs.androidx_recyclerview"
+    implementation "com.google.android.material:material:$libs.material_version"
 
     // Lifecycle
-    implementation "android.arch.lifecycle:extensions:$libs.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$androidx_lifecycle_version"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$libs.coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$libs.coroutinesVersion"
@@ -53,13 +53,13 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$libs.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$libs.retrofitVersion"
     implementation "com.squareup.moshi:moshi:$libs.moshiVersion"
-    implementation 'com.android.support:support-v4:28.0.0-rc02'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$libs.moshiVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$libs.okhttpVersion"
 
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
-    kapt 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation "com.github.bumptech.glide:glide:$libs.glide_version"
+    kapt "com.github.bumptech.glide:compiler:$libs.glide_version"
 
     implementation "com.google.dagger:dagger:$libs.daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$libs.daggerVersion"
@@ -77,15 +77,8 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$libs.mockitoVersion"
     testImplementation "org.mockito:mockito-inline:$libs.mockitoVersion"
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
-    testImplementation "android.arch.core:core-testing:$libs.lifecycleVersion"
+    testImplementation "androidx.arch.core:core-testing:$libs.androidx_core_testing_version"
 
-    androidTestImplementation "com.android.support.test:runner:$libs.runnerVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
-}
-
-
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
+    androidTestImplementation "androidx.test.ext:junit:$androidx_test_ext_junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$libs.androidx_espresso_version"
 }

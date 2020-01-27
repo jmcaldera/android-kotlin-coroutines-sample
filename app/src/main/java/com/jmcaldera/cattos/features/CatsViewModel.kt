@@ -1,9 +1,8 @@
 package com.jmcaldera.cattos.features
 
-import android.arch.lifecycle.MediatorLiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import com.jmcaldera.cattos.domain.model.Cat
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.jmcaldera.cattos.domain.CattoRepository
 import com.jmcaldera.cattos.domain.CommonDispatchers
 import com.jmcaldera.cattos.domain.exception.Failure
@@ -11,6 +10,7 @@ import com.jmcaldera.cattos.domain.exception.NetworkError
 import com.jmcaldera.cattos.domain.exception.ResponseUnsuccessful
 import com.jmcaldera.cattos.domain.exception.ServerError
 import com.jmcaldera.cattos.domain.functional.fold
+import com.jmcaldera.cattos.domain.model.Cat
 import com.jmcaldera.cattos.domain.model.LoadingState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job

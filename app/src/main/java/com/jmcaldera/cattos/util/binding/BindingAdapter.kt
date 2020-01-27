@@ -1,8 +1,8 @@
 package com.jmcaldera.cattos.util.binding
 
-import android.databinding.BindingAdapter
 import android.view.View
 import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import com.jmcaldera.cattos.util.loadUrl
 
 object BindingAdapters {

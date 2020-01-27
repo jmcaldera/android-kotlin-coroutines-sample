@@ -1,12 +1,12 @@
 package com.jmcaldera.cattos.features
 
-import android.databinding.DataBindingUtil
-import android.support.v7.recyclerview.extensions.AsyncDifferConfig
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.AsyncDifferConfig
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.jmcaldera.cattos.R
 import com.jmcaldera.cattos.databinding.ItemCattoImageBinding
 import com.jmcaldera.cattos.domain.model.Cat

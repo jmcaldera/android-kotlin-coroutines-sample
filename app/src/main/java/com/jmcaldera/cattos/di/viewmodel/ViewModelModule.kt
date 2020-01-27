@@ -1,7 +1,7 @@
 package com.jmcaldera.cattos.di.viewmodel
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.jmcaldera.cattos.features.CatsViewModel
 import dagger.Binds
 import dagger.Module

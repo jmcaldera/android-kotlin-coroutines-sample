@@ -1,8 +1,8 @@
 package com.jmcaldera.cattos
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.annotation.IdRes
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
 import com.jmcaldera.cattos.features.CatsFragment
 import com.jmcaldera.cattos.util.inTransaction
 import dagger.android.AndroidInjection
