@@ -1,8 +1,8 @@
 package com.jmcaldera.cattos.common
 
 import com.jmcaldera.cattos.domain.CommonDispatchers
-import kotlinx.coroutines.experimental.CoroutineDispatcher
-import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 class TestDispatcher(private val context: CoroutineDispatcher = Dispatchers.Unconfined) : CommonDispatchers {
 

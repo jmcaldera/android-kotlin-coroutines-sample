@@ -17,8 +17,8 @@ import com.jmcaldera.cattos.network.isSuccessful
 import com.jmcaldera.cattos.network.performRequest
 import com.jmcaldera.cattos.network.toApiResponse
 import com.jmcaldera.cattos.network.transformResponse
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.withContext
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 

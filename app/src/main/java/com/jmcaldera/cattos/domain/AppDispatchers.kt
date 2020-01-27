@@ -1,11 +1,7 @@
 package com.jmcaldera.cattos.domain
 
-import kotlinx.coroutines.experimental.CoroutineDispatcher
-import kotlinx.coroutines.experimental.DefaultDispatcher
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.android.Main
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.newSingleThreadContext
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,7 +15,7 @@ interface CommonDispatchers {
 open class AppDispatchers
 @Inject constructor() : CommonDispatchers {
 
-  override val diskIO: CoroutineDispatcher = newSingleThreadContext("diskThread")
+  override val diskIO: CoroutineDispatcher = Dispatchers.IO
   override val background: CoroutineDispatcher = Dispatchers.Default
   override val main: CoroutineDispatcher = Dispatchers.Main
 }

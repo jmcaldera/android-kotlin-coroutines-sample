@@ -4,7 +4,7 @@ import com.jmcaldera.cattos.common.ArchComponentTest
 import com.jmcaldera.cattos.common.TestDispatcher
 import com.jmcaldera.cattos.domain.CattoRepository
 import com.jmcaldera.cattos.domain.functional.right
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

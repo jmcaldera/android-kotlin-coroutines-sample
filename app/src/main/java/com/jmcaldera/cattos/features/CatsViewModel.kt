@@ -12,12 +12,12 @@ import com.jmcaldera.cattos.domain.exception.ResponseUnsuccessful
 import com.jmcaldera.cattos.domain.exception.ServerError
 import com.jmcaldera.cattos.domain.functional.fold
 import com.jmcaldera.cattos.domain.model.LoadingState
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.withContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.CoroutineContext
 
 class CatsViewModel
 @Inject constructor(
@@ -112,11 +112,11 @@ class CatsViewModel
 
   fun stopCoroutines() {
     val cancelled = rootJob.cancel()
-    if (cancelled) {
-      println("Coroutines cancelled")
-    } else {
-      println("Coroutines not cancelled")
-    }
+//    if (cancelled) {
+//      println("Coroutines cancelled")
+//    } else {
+//      println("Coroutines not cancelled")
+//    }
     println("Destroyed")
   }
 

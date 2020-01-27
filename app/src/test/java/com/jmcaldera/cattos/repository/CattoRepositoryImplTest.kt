@@ -10,7 +10,7 @@ import com.jmcaldera.cattos.domain.model.Cat
 import com.jmcaldera.cattos.network.CatResponse
 import com.jmcaldera.cattos.network.CattoService
 import com.jmcaldera.cattos.network.NetworkHandler
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.runBlocking
 import okhttp3.Headers
 import org.junit.Assert.assertTrue
 import org.junit.Before
